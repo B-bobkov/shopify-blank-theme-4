@@ -1,0 +1,288 @@
+<div class="drawer__header" data-section-id="{{ section.id }}" data-section-type="sidebar-menu-section">
+  <div class="drawer__close">
+    <button type="button" class="drawer__close-button js-drawer-close">
+      <span class="icon icon-x" aria-hidden="true"></span>
+      <span class="icon__fallback-text">{{ 'layout.drawers.close_menu' | t }}</span>
+    </button>
+  </div>
+</div>
+<div class="drawer__inner">
+  <ul class="drawer-nav">
+    {% for link in linklists[section.settings.sidebar_top_link_list].links %}
+      {% assign outerLoopIndex = forloop.index %}
+      {% if link.links != blank %}
+        {% assign has_active_link = false %}
+
+        {% if link.active or link.child_active %}
+          {% assign has_active_link = true %}
+        {% endif %}
+
+        <li class="drawer-nav__item{% unless request.page_type == 'index' %}{% if link.active %} drawer-nav__item--active{% endif %}{% endunless %}" aria-haspopup="true">
+          <div class="drawer-nav__has-sublist{% if has_active_link %} drawer-nav--expanded{% endif %}">
+            <a href="{{ link.url }}" class="drawer-nav__link h2"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+            <div class="drawer-nav__toggle">
+              <button type="button" class="drawer-nav__toggle-button" aria-expanded="{{ has_active_link }}" aria-label="{{ link.title }} {{ 'layout.navigation.menu' | t }}" aria-controls="Submenu-{{ outerLoopIndex }}">
+                <span class="icon {% if has_active_link %}icon-minus{% else %}icon-plus{% endif %}" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+          <ul class="drawer-nav__sublist" id="Submenu-{{ outerLoopIndex }}">
+            {% for childlink in link.links %}
+              {% if childlink.links != blank %}
+                {% assign has_active_childlink = false %}
+
+                {% if childlink.active or childlink.child_active %}
+                  {% assign has_active_childlink = true %}
+                {% endif %}
+
+                <li class="drawer-nav__item{% unless request.page_type == 'index' %}{% if childlink.active %} drawer-nav__item--active{% endif %}{% endunless %}" aria-haspopup="true">
+                  <div class="drawer-nav__has-sublist{% if has_active_childlink %} drawer-nav--expanded{% endif %}">
+                    <a href="{{ childlink.url }}" class="drawer-nav__link"{% if childlink.active %} aria-current="page"{% endif %}>{{ childlink.title }}</a>
+                    <div class="drawer-nav__toggle">
+                      <button type="button" class="drawer-nav__toggle-button" aria-expanded="{{ has_active_childlink }}" aria-label="{{ childlink.title }} {{ 'layout.navigation.menu' | t }}" aria-controls="Submenu-{{ outerLoopIndex }}-{{ forloop.index }}">
+                        <span class="icon {% if has_active_childlink %}icon-minus{% else %}icon-plus{% endif %}" aria-hidden="true"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <ul class="drawer-nav__sublist drawer-nav__sublist--inner" id="Submenu-{{ outerLoopIndex }}-{{ forloop.index }}">
+                    {% for grandchildlink in childlink.links %}
+                      <li class="drawer-nav__item drawer-nav__grandchild{% unless request.page_type == 'index' %}{% if grandchildlink.active %} drawer-nav__item--active{% endif %}{% endunless %}">
+                        <a href="{{ grandchildlink.url }}" class="drawer-nav__link"{% if grandchildlink.active %} aria-current="page"{% endif %}>{{ grandchildlink.title | escape }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% else %}
+                <li class="drawer-nav__item{% unless request.page_type == 'index' %}{% if childlink.active %} drawer-nav__item--active{% endif %}{% endunless %}">
+                  <a href="{{ childlink.url }}" class="drawer-nav__link"{% if childlink.active %} aria-current="page"{% endif %}>{{ childlink.title | escape }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+      {% else %}
+        <li class="drawer-nav__item{% unless request.page_type == 'index' %}{% if link.active %} drawer-nav__item--active{% endif %}{% endunless %}">
+          <a href="{{ link.url }}" class="drawer-nav__link h2"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    <li class="drawer-nav__spacer"></li>
+
+    {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+        <li class="drawer-nav__item drawer-nav__item--secondary">
+          <a href="{{ routes.account_url }}">{{ 'layout.customer.account' | t }}</a>
+        </li>
+        <li class="drawer-nav__item drawer-nav__item--secondary">
+          {{ 'layout.customer.log_out' | t | customer_logout_link }}
+        </li>
+      {% else %}
+        <li class="drawer-nav__item drawer-nav__item--secondary">
+          {{ 'layout.customer.log_in' | t | customer_login_link }}
+        </li>
+        <li class="drawer-nav__item drawer-nav__item--secondary">
+          {{ 'layout.customer.create_account' | t | customer_register_link }}
+        </li>
+      {% endif %}
+    {% endif %}
+    {% for link in linklists[section.settings.sidebar_bottom_link_list].links %}
+      <li class="drawer-nav__item drawer-nav__item--secondary"><a href="{{ link.url }}">{{ link.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <ul class="list--inline social-icons social-icons--drawer">
+    {% if settings.social_twitter_link != blank %}
+      <li>
+        <a href="{{ settings.social_twitter_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}">
+          <span class="icon icon-twitter" aria-hidden="true"></span>
+          <span class="visually-hidden">Twitter</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_facebook_link != blank %}
+      <li>
+        <a href="{{ settings.social_facebook_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
+          <span class="icon icon-facebook" aria-hidden="true"></span>
+          <span class="visually-hidden">Facebook</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_pinterest_link != blank %}
+      <li>
+        <a href="{{ settings.social_pinterest_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}">
+          <span class="icon icon-pinterest" aria-hidden="true"></span>
+          <span class="visually-hidden">Pinterest</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_google_plus_link != blank %}
+      <li>
+        <a href="{{ settings.social_google_plus_link | escape }}" rel="publisher" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Google Plus' }}">
+          <span class="icon icon-google_plus" aria-hidden="true"></span>
+          <span class="visually-hidden">Google Plus</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_instagram_link != blank %}
+      <li>
+        <a href="{{ settings.social_instagram_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
+          <span class="icon icon-instagram" aria-hidden="true"></span>
+          <span class="visually-hidden">Instagram</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_snapchat_link != blank %}
+      <li>
+        <a href="{{ settings.social_snapchat_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Snapchat' }}">
+          <span class="icon icon-snapchat" aria-hidden="true"></span>
+          <span class="visually-hidden">Snapchat</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_tumblr_link != blank %}
+      <li>
+        <a href="{{ settings.social_tumblr_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}">
+          <span class="icon icon-tumblr" aria-hidden="true"></span>
+          <span class="visually-hidden">Tumblr</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_youtube_link != blank %}
+      <li>
+        <a href="{{ settings.social_youtube_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}">
+          <span class="icon icon-youtube" aria-hidden="true"></span>
+          <span class="visually-hidden">YouTube</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_vimeo_link != blank %}
+      <li>
+        <a href="{{ settings.social_vimeo_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}">
+          <span class="icon icon-vimeo" aria-hidden="true"></span>
+          <span class="visually-hidden">Vimeo</span>
+        </a>
+      </li>
+    {% endif %}
+    {% if settings.social_fancy_link != blank %}
+      <li>
+        <a href="{{ settings.social_fancy_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Fancy' }}">
+          <span class="icon icon-fancy" aria-hidden="true"></span>
+          <span class="visually-hidden">Fancy</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Nabídka v postranní liště",
+    "da": "Sidebjælkemenu",
+    "de": "Seitenleistenmenü",
+    "en": "Sidebar menu",
+    "es": "Menú de la barra lateral",
+    "fi": "Sivupalkkivalikko",
+    "fr": "Menu de la barre latérale",
+    "it": "Menu sidebar",
+    "ja": "サイドバーメニュー",
+    "ko": "사이드바 메뉴",
+    "nb": "Sidepanelmeny",
+    "nl": "Zijbalkmenu",
+    "pl": "Menu paska bocznego",
+    "pt-BR": "Menu lateral",
+    "pt-PT": "Menu lateral",
+    "sv": "Sidomeny",
+    "th": "เมนูแถบด้านข้าง",
+    "tr": "Yan çubuk menüsü",
+    "vi": "Menu thanh bên",
+    "zh-CN": "侧边栏菜单",
+    "zh-TW": "側邊欄選單"
+  },
+  "class": "sidebar-menu-section",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "sidebar_top_link_list",
+      "label": {
+        "cs": "Primární nabídka",
+        "da": "Primær menu",
+        "de": "Hauptmenü",
+        "en": "Primary menu",
+        "es": "Menú primario",
+        "fi": "Ensisijainen valikko",
+        "fr": "Menu principal",
+        "it": "Menu principale",
+        "ja": "プライマリメニュー",
+        "ko": "기본 메뉴",
+        "nb": "Primærmeny",
+        "nl": "Eerste menu",
+        "pl": "Główne menu",
+        "pt-BR": "Menu principal",
+        "pt-PT": "Menu primário",
+        "sv": "Primärmeny",
+        "th": "เมนูหลัก",
+        "tr": "Birincil menü",
+        "vi": "Menu chính",
+        "zh-CN": "主菜单",
+        "zh-TW": "主要選單"
+      },
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "sidebar_bottom_link_list",
+      "label": {
+        "cs": "Vedlejší nabídka",
+        "da": "Ekstra menu",
+        "de": "Zusatzmenü",
+        "en": "Additional menu",
+        "es": "Menú adicional",
+        "fi": "Lisävalikko",
+        "fr": "Menu supplémentaire",
+        "it": "Menu aggiuntivo",
+        "ja": "追加メニュー",
+        "ko": "추가 메뉴",
+        "nb": "Tilleggsmeny",
+        "nl": "Extra menu",
+        "pl": "Dodatkowe menu",
+        "pt-BR": "Menu adicional",
+        "pt-PT": "Menu adicional",
+        "sv": "Ytterligare meny",
+        "th": "เมนูเพิ่มเติม",
+        "tr": "Ek menü",
+        "vi": "Menu bổ sung",
+        "zh-CN": "其他菜单",
+        "zh-TW": "附加選單"
+      },
+      "default": "footer",
+      "info": {
+        "cs": "V této nabídce se nezobrazí položky rozevíracího seznamu",
+        "da": "Denne menu viser ikke rullemenupunkter",
+        "de": "Dieses Menü zeigt keine Dropdowns an",
+        "en": "This menu won't show dropdown items",
+        "es": "Este menú no mostrará elementos desplegables",
+        "fi": "Tämä valikko ei näytä pudotuskohteita",
+        "fr": "Ce menu n'affichera pas les éléments des menus déroulants",
+        "it": "Questo menu non mostrerà elementi a discesa",
+        "ja": "このメニューにはドロップダウンアイテムは表示されません",
+        "ko": "이 메뉴는 드롭 다운 항목을 표시하지 않습니다.",
+        "nb": "Denne menyen vil ikke vise rullegardinelementer",
+        "nl": "Dit menu laat geen vervolgkeuze-artikelen zien.",
+        "pl": "W tym menu pozycje rozwijane nie będą wyświetlane",
+        "pt-BR": "Este menu não mostra itens suspensos",
+        "pt-PT": "Este menu não irá mostrar itens pendentes",
+        "sv": "Den här menyn kommer inte att visa objekt i rullgardinsmenyn",
+        "th": "เมนูนี้จะไม่แสดงรายการดรอปดาวน์",
+        "tr": "Bu menü açılır öğeleri göstermez",
+        "vi": "Menu này sẽ không hiển thị các mục thả xuống",
+        "zh-CN": "此菜单不会显示下拉项",
+        "zh-TW": "這個選單不會顯示下拉式項目"
+      }
+    }
+  ]
+}
+{% endschema %}

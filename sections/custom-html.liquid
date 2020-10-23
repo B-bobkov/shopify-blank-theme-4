@@ -1,0 +1,142 @@
+{% if section.settings.code != blank %}
+<div class="grid grid--uniform" data-section-id="{{ section.id }}" data-section-type="custom-html-section">
+  <div class="grid__item {{ block_width }}">
+    <div class="page-width">
+        {{ section.settings.code }}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Vlastní HTML",
+    "da": "Tilpasset HTML",
+    "de": "Benutzerdefiniertes HTML",
+    "en": "Custom HTML",
+    "es": "HTML personalizado",
+    "fi": "Mukautettu HTML",
+    "fr": "Code HTML personnalisé",
+    "it": "HTML personalizzato",
+    "ja": "HTMLをカスタムする",
+    "ko": "사용자 지정 HTML",
+    "nb": "Tilpasset HTML",
+    "nl": "Aangepaste HTML",
+    "pl": "Niestandardowy HTML",
+    "pt-BR": "HTML personalizado",
+    "pt-PT": "HTML personalizado",
+    "sv": "Anpassa HTML",
+    "th": "HTML แบบกำหนดเอง",
+    "tr": "Özel HTML",
+    "vi": "HTML tùy chỉnh",
+    "zh-CN": "自定义 HTML",
+    "zh-TW": "自訂 HTML"
+  },
+  "class": "index-section custom-html-section",
+  "settings": [
+    {
+      "type": "html",
+      "id": "code",
+      "label": {
+        "cs": "Vlastní HTML",
+        "da": "Tilpasset HTML",
+        "de": "Benutzerdefiniertes HTML",
+        "en": "Custom HTML",
+        "es": "HTML personalizado",
+        "fi": "Mukautettu HTML",
+        "fr": "Code HTML personnalisé",
+        "it": "HTML personalizzato",
+        "ja": "HTMLをカスタムする",
+        "ko": "사용자 지정 HTML",
+        "nb": "Tilpasset HTML",
+        "nl": "Aangepaste HTML",
+        "pl": "Niestandardowy HTML",
+        "pt-BR": "HTML personalizado",
+        "pt-PT": "HTML personalizado",
+        "sv": "Anpassa HTML",
+        "th": "HTML แบบกำหนดเอง",
+        "tr": "Özel HTML",
+        "vi": "HTML tùy chỉnh",
+        "zh-CN": "自定义 HTML",
+        "zh-TW": "自訂 HTML"
+      },
+      "default": {
+        "cs": "<div style='text-align:center;'><h2>Naformátujte svůj text pomocí HTML, aby byl přehledný a srozumitelný.</h2>Prostřednictvím takového textu pak můžete informovat zákazníky o své značce.</div>",
+        "da": "<div style='text-align:center;'><h2>Brug HTML til at formatere din tekst, så den nemt kan læses.</h2> Denne tekst kan bruges til at dele oplysninger om dit brand med dine kunder.</div>",
+        "de": "<div style='text-align:center;'><h2>Formatiere deinen Text mit HTML, damit er leichter lesbar ist.</h2>Mit diesem Text kannst du deine Kunden über deine Marke informieren.</div>",
+        "en": "<div style='text-align:center;'><h2>Use HTML to format your text so it can be easily read.</h2>This text can be used to share information about your brand with customers.</div>",
+        "es": "<div style='text-align:center;'><h2>Usa HTML para formatear tu texto para que se pueda leer fácilmente</h2>. Este texto se puede usar para compartir información sobre tu marca con los clientes.</div>",
+        "fi": "<div style='text-align:center;'><h2>HTML-muodossa voit muotoilla tekstin niin, että sitä on helppo lukea.</h2> Tätä tekstiä voidaan käyttää brändiäsi koskevien tietojen jakamiseen asiakkaille.</div>",
+        "fr": "<div style='text-align:center;'><h2>Utilisez le code HTML pour formater votre texte afin qu'il puisse être facilement lu.</h2>Vous pouvez utiliser ce texte pour partager des informations sur votre marque avec les clients.</div>",
+        "it": "<div style='text-align:center;'><h2>Utilizza l'HTML per formattare il tuo testo così che sia facilmente leggibile.</h2>Questo testo può essere usato per condividere le informazioni sul tuo brand con i clienti.</div>",
+        "ja": "<div style='text-align:center;'><h2>テキストが読みやすくなるように、HTMLを使用して書式設定します。</h2>このテキストは、あなたのブランドに関する情報をお客様と共有するために使用できます。</div>",
+        "ko": "<div style='text-align:center;'><h2>HTML을 사용하여 텍스트를 형식화하여 쉽게 읽을 수 있습니다.</h2>이 텍스트는 고객의 브랜드에 대한 정보를 공유하는데 사용할 수 있습니다.</div>",
+        "nb": "<div style='text-align:center;'><h2>Bruk HTML for å formatere teksten din så den er lettlest.</h2>Denne teksten kan brukes til å dele informasjon om merkevaren din med kundene.</div>",
+        "nl": "<div style='text-align:center;'><h2>Gebruik HTML om je tekst op te maken, zodat deze makkelijk leesbaar is.</h2>Deze tekst kan worden gebruikt om informatie over je merk met klanten te delen.</div>",
+        "pl": "<div style='text-align:center;'><h2>Użyj języka HTML do sformatowania tekstu, tak aby można go było łatwo odczytać.</h2>Tekst ten może służyć do udostępniania klientom informacji o marce.</div>",
+        "pt-BR": "<div style='text-align:center;'><h2>Use HTML para formatar seu texto, assim ele pode ser lido com facilidade.</h2> Esse texto pode ser usado para compartilhar informações sobre sua marca com os clientes.</div>",
+        "pt-PT": "<div style='text-align:center;'><h2>Use HTML para formatar o seu texto, de forma a que este possa ser lido facilmente.</h2> Este texto pode ser utilizado para partilhar informações sobre a sua marca com os clientes.</div>",
+        "sv": "<div style='text-align:center;'><h2>Använd HTML för att formatera din text så att den lätt kan läsas.</h2> Den här texten kan användas för att dela information om ditt varumärke med kunder.</div>",
+        "th": "<div style='text-align:center;'><h2>ใช้ HTML ในการจัดรูปแบบข้อความของคุณเพื่อให้สามารถอ่านได้ง่าย</h2>สามารถใช้ข้อความนี้ในการแชร์ข้อมูลเกี่ยวกับแบรนด์ของคุณกับลูกค้า</div>",
+        "tr": "<div style='text-align:center;'><h2>Metninizi, kolayca okunabilmesi için HTML kullanarak biçimlendirin.</h2>Bu metin, müşterilerle markanız hakkında bilgi paylaşmak için kullanılabilir.</div>",
+        "vi": "<div style='text-align:center;'><h2>Sử dụng HTML để định dạng văn bản của bạn sao cho dễ đọc.</h2>Có thể sử dụng văn bản này để chia sẻ thông tin về thương hiệu của bạn với khách hàng.</div>",
+        "zh-CN": "<div style='text-align:center;'><h2>使用 HTML 设置文本格式，以便轻松阅读。</h2>此文本可用于与客户共享有关您的品牌的信息。</div>",
+        "zh-TW": "<div style='text-align:center;'><h2>使用 HTML 來設定文字格式，使文字易於閱讀。</h2>您可以利用此段文字跟顧客分享品牌資訊。</div>"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "cs": "Vlastní HTML",
+        "da": "Tilpasset HTML",
+        "de": "Benutzerdefiniertes HTML",
+        "en": "Custom HTML",
+        "es": "HTML personalizado",
+        "fi": "Mukautettu HTML",
+        "fr": "Code HTML personnalisé",
+        "it": "HTML personalizzato",
+        "ja": "HTMLをカスタムする",
+        "ko": "사용자 지정 HTML",
+        "nb": "Tilpasset HTML",
+        "nl": "Aangepaste HTML",
+        "pl": "Niestandardowy HTML",
+        "pt-BR": "HTML personalizado",
+        "pt-PT": "HTML personalizado",
+        "sv": "Anpassa HTML",
+        "th": "HTML แบบกำหนดเอง",
+        "tr": "Özel HTML",
+        "vi": "HTML tùy chỉnh",
+        "zh-CN": "自定义 HTML",
+        "zh-TW": "自訂 HTML"
+      },
+      "category": {
+        "cs": "Pokročilé",
+        "da": "Avanceret",
+        "de": "Advanced",
+        "en": "Advanced",
+        "es": "Avanzado",
+        "fi": "Advanced",
+        "fr": "Advanced",
+        "it": "Advanced",
+        "ja": "高度",
+        "ko": "Advanced",
+        "nb": "Avansert",
+        "nl": "Advanced",
+        "pl": "Zaawansowane",
+        "pt-BR": "Advanced",
+        "pt-PT": "Avançado",
+        "sv": "Avancerad",
+        "th": "ขั้นสูง",
+        "tr": "Gelişmiş",
+        "vi": "Nâng cao",
+        "zh-CN": "高级版",
+        "zh-TW": "Advanced"
+      }
+    }
+  ]
+}
+{% endschema %}

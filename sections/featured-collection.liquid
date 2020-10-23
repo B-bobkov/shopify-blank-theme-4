@@ -1,0 +1,468 @@
+<div class="featured-collection" data-section-id="{{ section.id }}" data-section-type="featured-collection-section">
+  {% comment %}
+    By default, featured products come from your Frontpage collection.
+    This collection is empty by default and must have products added to it
+  {% endcomment %}
+  {% if section.settings.home_featured_products == blank %}
+    {% assign featured_collection = "frontpage" %}
+  {% else %}
+    {% assign featured_collection = section.settings.home_featured_products %}
+  {% endif %}
+
+  {% comment %}Heading for screen readers{% endcomment %}
+  <h2 class="visually-hidden">{{ featured_collection }}</h2>
+
+  <div class="grid grid--no-gutters grid--uniform collection-grid">
+    {% comment %}
+      Set grid item widths based on settings
+    {% endcomment %}
+    {% include 'product-grid-width' with product_image_type: section.settings.product_image_type, product_image_size: section.settings.product_image_size %}
+
+    {% unless section.settings.home_featured_products == blank %}
+      {% for product in collections[featured_collection].products %}
+        {% assign price = product.price | money_without_trailing_zeros %}
+        {% include 'product-grid-item' with product_image_spacing: section.settings.product_image_spacing, vendor_enable: section.settings.vendor_enable %}
+      {% else %}
+        {% comment %}
+          If collection is empty, show onboarding state
+          For onboarding new users to your theme, we add some default products and onboarding tutorials to help populate their store
+        {% endcomment %}
+        {% include 'onboarding-featured-collection' with product_image_spacing: section.settings.product_image_spacing %}
+
+      {% endfor %}
+    {% else %}
+      {% include 'onboarding-featured-collection' with product_image_spacing: section.settings.product_image_spacing %}
+    {% endunless %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Propagovaná kolekce",
+    "da": "Udvalgt kollektion",
+    "de": "Vorgestellte Kategorie",
+    "en": "Featured collection",
+    "es": "Colección destacada",
+    "fi": "Esittelyssä oleva kokoelma",
+    "fr": "Collection en vedette",
+    "it": "Collezione in evidenza",
+    "ja": "特集コレクション",
+    "ko": "추천 컬렉션",
+    "nb": "Utvalgt samling",
+    "nl": "Uitgelichte collectie",
+    "pl": "Polecana kolekcja",
+    "pt-BR": "Coleção em destaque",
+    "pt-PT": "Coleção em destaque",
+    "sv": "Utvald kollektion",
+    "th": "คอลเลกชันแนะนำ",
+    "tr": "Öne çıkan koleksiyon",
+    "vi": "Bộ sưu tập nổi bật",
+    "zh-CN": "特色产品系列",
+    "zh-TW": "精選商品系列"
+  },
+  "class": "index-section featured-collection-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "cs": "Kolekce",
+        "da": "Kollektion",
+        "de": "Kategorie",
+        "en": "Collection",
+        "es": "Colección",
+        "fi": "Kokoelma",
+        "fr": "Collection",
+        "it": "Collezione",
+        "ja": "コレクション",
+        "ko": "컬렉션",
+        "nb": "Samling",
+        "nl": "Collectie",
+        "pl": "Kolekcja",
+        "pt-BR": "Coleção",
+        "pt-PT": "Coleção",
+        "sv": "Produktserie",
+        "th": "คอลเลกชัน",
+        "tr": "Koleksiyon",
+        "vi": "Bộ sưu tập",
+        "zh-CN": "收藏",
+        "zh-TW": "商品系列"
+      }
+    },
+    {
+      "type": "collection",
+      "id": "home_featured_products",
+      "label": {
+        "cs": "Kolekce",
+        "da": "Kollektion",
+        "de": "Kategorie",
+        "en": "Collection",
+        "es": "Colección",
+        "fi": "Kokoelma",
+        "fr": "Collection",
+        "it": "Collezione",
+        "ja": "コレクション",
+        "ko": "컬렉션",
+        "nb": "Samling",
+        "nl": "Collectie",
+        "pl": "Kolekcja",
+        "pt-BR": "Coleção",
+        "pt-PT": "Coleção",
+        "sv": "Produktserie",
+        "th": "คอลเลกชัน",
+        "tr": "Koleksiyon",
+        "vi": "Bộ sưu tập",
+        "zh-CN": "收藏",
+        "zh-TW": "商品系列"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "cs": "Obrázek",
+        "da": "Billede",
+        "de": "Foto",
+        "en": "Image",
+        "es": "Imagen",
+        "fi": "Kuva",
+        "fr": "Image",
+        "it": "Immagine",
+        "ja": "画像",
+        "ko": "이미지",
+        "nb": "Bilde",
+        "nl": "Afbeelding",
+        "pl": "Obraz",
+        "pt-BR": "Imagem",
+        "pt-PT": "Imagem",
+        "sv": "Bild",
+        "th": "รูปภาพ",
+        "tr": "Görsel",
+        "vi": "Hình ảnh",
+        "zh-CN": "图片",
+        "zh-TW": "圖片"
+      }
+    },
+    {
+      "type": "select",
+      "id": "product_image_type",
+      "label": {
+        "cs": "Styl obrázku",
+        "da": "Billedstil",
+        "de": "Bildstil",
+        "en": "Image style",
+        "es": "Estilo de imagen",
+        "fi": "Kuvan tyyli",
+        "fr": "Style d'image",
+        "it": "Stile immagine",
+        "ja": "画像スタイル",
+        "ko": "이미지 스타일",
+        "nb": "Bildestil",
+        "nl": "Afbeeldingsstijl",
+        "pl": "Styl obrazu",
+        "pt-BR": "Estilo da imagem",
+        "pt-PT": "Estilo da imagem",
+        "sv": "Bildstil",
+        "th": "รูปแบบรูปภาพ",
+        "tr": "Görsel stili",
+        "vi": "Kiểu hình ảnh",
+        "zh-CN": "图片样式",
+        "zh-TW": "圖片樣式"
+      },
+      "options": [
+        {
+          "value": "portrait",
+          "label": {
+            "cs": "Na výšku/čtverec",
+            "da": "Høj/firkantet",
+            "de": "Hoch/Quadrat",
+            "en": "Tall/square",
+            "es": "Alta/cuadrada",
+            "fi": "Korkea/neliö",
+            "fr": "Grand/carré",
+            "it": "Verticale/quadrata",
+            "ja": "縦長/正方形",
+            "ko": "높이/정사각형",
+            "nb": "Høyt/kvadratisk",
+            "nl": "Hoog/vierkant",
+            "pl": "Wysoki/kwadratowy",
+            "pt-BR": "Alto/quadrado",
+            "pt-PT": "Alto/quadrado",
+            "sv": "Hög/kvadratisk",
+            "th": "สูง/สี่เหลี่ยมจัตุรัส",
+            "tr": "Uzun/kare",
+            "vi": "Cao/vuông",
+            "zh-CN": "高/正方形",
+            "zh-TW": "高/正方形"
+          }
+        },
+        {
+          "value": "landscape",
+          "label": {
+            "cs": "Na šířku",
+            "da": "Bred",
+            "de": "Breit",
+            "en": "Wide",
+            "es": "Ancho",
+            "fi": "Leveä",
+            "fr": "Large",
+            "it": "Orizzontale",
+            "ja": "横長",
+            "ko": "넓이",
+            "nb": "Bred",
+            "nl": "Breed",
+            "pl": "Szeroki",
+            "pt-BR": "Grande",
+            "pt-PT": "Largo",
+            "sv": "Bred",
+            "th": "กว้าง",
+            "tr": "Geniş",
+            "vi": "Rộng",
+            "zh-CN": "宽",
+            "zh-TW": "寬"
+          }
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "product_image_size",
+      "label": {
+        "cs": "Velikost obrázku",
+        "da": "Billedets størrelse",
+        "de": "Foto-Größe",
+        "en": "Image size",
+        "es": "Tamaño de la imagen",
+        "fi": "Kuvan koko",
+        "fr": "Taille de l'image",
+        "it": "Dimensione immagine",
+        "ja": "画像サイズ",
+        "ko": "이미지 크기",
+        "nb": "Bildestørrelse",
+        "nl": "Afbeeldingsformaat",
+        "pl": "Rozmiar obrazu",
+        "pt-BR": "Tamanho da imagem",
+        "pt-PT": "Tamanho da imagem",
+        "sv": "Bildstorlek",
+        "th": "ขนาดรูปภาพ",
+        "tr": "Görsel boyutu",
+        "vi": "Kích cỡ hình ảnh",
+        "zh-CN": "图片尺寸",
+        "zh-TW": "圖片尺寸"
+      },
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": {
+            "cs": "Malá",
+            "da": "Lille",
+            "de": "Klein",
+            "en": "Small",
+            "es": "Pequeña",
+            "fi": "Pieni",
+            "fr": "Petite",
+            "it": "Small",
+            "ja": "小",
+            "ko": "스몰",
+            "nb": "Liten",
+            "nl": "Klein",
+            "pl": "Mały",
+            "pt-BR": "Pequeno",
+            "pt-PT": "Pequeno",
+            "sv": "Liten",
+            "th": "เล็ก",
+            "tr": "Küçük",
+            "vi": "Nhỏ",
+            "zh-CN": "小",
+            "zh-TW": "小型"
+          }
+        },
+        {
+          "value": "medium",
+          "label": {
+            "cs": "Střední",
+            "da": "Medium",
+            "de": "Mitte",
+            "en": "Medium",
+            "es": "Mediana",
+            "fi": "Keskisuuri",
+            "fr": "Moyenne",
+            "it": "Medium",
+            "ja": "中",
+            "ko": "보통",
+            "nb": "Middels",
+            "nl": "Gemiddeld",
+            "pl": "Średni",
+            "pt-BR": "Médio",
+            "pt-PT": "Média",
+            "sv": "Medium",
+            "th": "ปานกลาง",
+            "tr": "Orta",
+            "vi": "Trung bình",
+            "zh-CN": "中等",
+            "zh-TW": "中等"
+          }
+        },
+        {
+          "value": "large",
+          "label": {
+            "cs": "Velká",
+            "da": "Stor",
+            "de": "Groß",
+            "en": "Large",
+            "es": "Grande",
+            "fi": "Suuri",
+            "fr": "Grande",
+            "it": "Large",
+            "ja": "大",
+            "ko": "라지",
+            "nb": "Stor",
+            "nl": "Groot",
+            "pl": "Duży",
+            "pt-BR": "Grande",
+            "pt-PT": "Grande",
+            "sv": "Stor",
+            "th": "ใหญ่",
+            "tr": "Büyük",
+            "vi": "Lớn",
+            "zh-CN": "大",
+            "zh-TW": "大型"
+          }
+        },
+        {
+          "value": "xlarge",
+          "label": {
+            "cs": "Extra velká",
+            "da": "Ekstra stor",
+            "de": "Extra groß",
+            "en": "Extra large",
+            "es": "Extra grande",
+            "fi": "Erikoissuuri",
+            "fr": "Très grande",
+            "it": "Extra large",
+            "ja": "特大",
+            "ko": "특대",
+            "nb": "Ekstra stort",
+            "nl": "Extra groot",
+            "pl": "Bardzo duży",
+            "pt-BR": "Extra grande",
+            "pt-PT": "Extra grande",
+            "sv": "Extra stor",
+            "th": "ขนาดใหญ่พิเศษ",
+            "tr": "Çok büyük",
+            "vi": "Cực lớn",
+            "zh-CN": "特大",
+            "zh-TW": "超大型"
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "product_image_spacing",
+      "label": {
+        "cs": "Povolit rozestupy mezi obrázky",
+        "da": "Aktivér billedafstand",
+        "de": "Bildabstand aktivieren",
+        "en": "Enable image spacing",
+        "es": "Habilitar espaciado de imagen",
+        "fi": "Ota kuvien välistys käyttöön",
+        "fr": "Activer l'espacement des images",
+        "it": "Abilita spaziatura immagini",
+        "ja": "画像の間隔を有効にする",
+        "ko": "이미지 공간 추가",
+        "nb": "Aktiver bildeavstand",
+        "nl": "Afstand tussen afbeeldingen inschakelen",
+        "pl": "Włącz odstępy między obrazami",
+        "pt-BR": "Habilitar espaçamento de imagem",
+        "pt-PT": "Ativar espaçamento de imagens",
+        "sv": "Aktivera bildavstånd",
+        "th": "เปิดใช้การวางตำแหน่งรูปภาพ",
+        "tr": "Görüntü aralığını etkinleştir",
+        "vi": "Bật khoảng cách hình ảnh",
+        "zh-CN": "启用图片间距",
+        "zh-TW": "啟用圖片間距"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "vendor_enable",
+      "label": {
+        "cs": "Zobrazit dodavatele produktu",
+        "da": "Vis produktleverandør",
+        "de": "Produktanbieter anzeigen",
+        "en": "Show product vendor",
+        "es": "Mostrar proveedor del producto",
+        "fi": "Näytä tuotteen myyjä",
+        "fr": "Afficher le distributeur du produit",
+        "it": "Mostra fornitore prodotto",
+        "ja": "商品の販売元を表示する",
+        "ko": "제품 공급 업체 표시",
+        "nb": "Vis produktleverandør",
+        "nl": "Productleverancier weergeven",
+        "pl": "Pokaż dostawcę produktu",
+        "pt-BR": "Exiba o fornecedor do produto",
+        "pt-PT": "Mostrar o fornecedor do produto",
+        "sv": "Visa produktsäljare",
+        "th": "แสดงผู้ขายสินค้า",
+        "tr": "Ürün satıcısını göster",
+        "vi": "Hiển thị nhà cung cấp sản phẩm",
+        "zh-CN": "显示产品厂商",
+        "zh-TW": "顯示產品廠商"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "cs": "Propagovaná kolekce",
+        "da": "Udvalgt kollektion",
+        "de": "Vorgestellte Kategorie",
+        "en": "Featured collection",
+        "es": "Colección destacada",
+        "fi": "Esittelyssä oleva kokoelma",
+        "fr": "Collection en vedette",
+        "it": "Collezione in evidenza",
+        "ja": "特集コレクション",
+        "ko": "추천 컬렉션",
+        "nb": "Utvalgt samling",
+        "nl": "Uitgelichte collectie",
+        "pl": "Polecana kolekcja",
+        "pt-BR": "Coleção em destaque",
+        "pt-PT": "Coleção em destaque",
+        "sv": "Utvald kollektion",
+        "th": "คอลเลกชันแนะนำ",
+        "tr": "Öne çıkan koleksiyon",
+        "vi": "Bộ sưu tập nổi bật",
+        "zh-CN": "特色产品系列",
+        "zh-TW": "精選商品系列"
+      },
+      "category": {
+        "cs": "Kolekce",
+        "da": "Kollektion",
+        "de": "Kategorie",
+        "en": "Collection",
+        "es": "Colección",
+        "fi": "Kokoelma",
+        "fr": "Collection",
+        "it": "Collezione",
+        "ja": "コレクション",
+        "ko": "컬렉션",
+        "nb": "Samling",
+        "nl": "Collectie",
+        "pl": "Kolekcja",
+        "pt-BR": "Coleção",
+        "pt-PT": "Coleção",
+        "sv": "Produktserie",
+        "th": "คอลเลกชัน",
+        "tr": "Koleksiyon",
+        "vi": "Bộ sưu tập",
+        "zh-CN": "收藏",
+        "zh-TW": "商品系列"
+      }
+    }
+  ]
+}
+{% endschema %}

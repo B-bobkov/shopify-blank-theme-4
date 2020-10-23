@@ -1,0 +1,35 @@
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/product-template.liquid
+{% endcomment %}
+
+{% section 'product-template' %}
+{% section 'product-recommendations' %}
+
+{% comment %}
+  Get the text and link for the back button
+{% endcomment %}
+{% assign back_url = routes.root_url %}
+{% assign back_text = 'products.product.back' | t %}
+{% if collection %}
+  {% assign back_url = collection.url %}
+  {% assign back_text = collection.title %}
+{% endif %}
+
+<div class="back-button grid">
+  <div class="grid__item"></div>
+    <a href="{{ back_url }}" class="btn back-button__link">
+      <span class="icon icon-arrow-left" aria-hidden="true"></span>
+      <span>{{ back_text }}</span>
+    </a>
+  </div>
+</div>
+
+<script>
+  // Override default values of theme.strings for each template.
+  // Alternate product templates can change values of
+  // add to cart button, sold out, and unavailable states here.
+  window.productStrings = {
+    addToCart: {{ 'products.product.add_to_cart' | t | json }},
+    soldOut: {{ 'products.product.sold_out' | t | json }}
+  }
+</script>

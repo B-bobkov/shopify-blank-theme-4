@@ -1,0 +1,228 @@
+<footer class="site-footer" role="contentinfo">
+  {% comment %}
+    Show Shop Links from footer linklist if it has any links
+  {% endcomment %}
+  {% if linklists[section.settings.footer_link_list].links.size > 0 %}
+    <ul class="list--inline site-footer__linklist">
+      {% for link in linklists[section.settings.footer_link_list].links %}
+        <li class="h4"><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="grid text-center large-up--grid--table">
+    <div class="grid__item large-up--one-quarter text-center">
+      <ul class="list--inline social-icons social-icons--footer">
+        {% if settings.social_twitter_link != blank %}
+          <li>
+            <a href="{{ settings.social_twitter_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}">
+              <span class="icon icon-twitter" aria-hidden="true"></span>
+              <span class="visually-hidden">Twitter</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_facebook_link != blank %}
+          <li>
+            <a href="{{ settings.social_facebook_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
+              <span class="icon icon-facebook" aria-hidden="true"></span>
+              <span class="visually-hidden">Facebook</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_pinterest_link != blank %}
+          <li>
+            <a href="{{ settings.social_pinterest_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}">
+              <span class="icon icon-pinterest" aria-hidden="true"></span>
+              <span class="visually-hidden">Pinterest</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_google_plus_link != blank %}
+          <li>
+            <a href="{{ settings.social_google_plus_link | escape }}" rel="publisher" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Google Plus' }}">
+              <span class="icon icon-google_plus" aria-hidden="true"></span>
+              <span class="visually-hidden">Google Plus</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_instagram_link != blank %}
+          <li>
+            <a href="{{ settings.social_instagram_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
+              <span class="icon icon-instagram" aria-hidden="true"></span>
+              <span class="visually-hidden">Instagram</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_snapchat_link != blank %}
+        <li>
+          <a href="{{ settings.social_snapchat_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Snapchat' }}">
+            <span class="icon icon-snapchat" aria-hidden="true"></span>
+            <span class="visually-hidden">Snapchat</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if settings.social_tumblr_link != blank %}
+          <li>
+            <a href="{{ settings.social_tumblr_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}">
+              <span class="icon icon-tumblr" aria-hidden="true"></span>
+              <span class="visually-hidden">Tumblr</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_youtube_link != blank %}
+          <li>
+            <a href="{{ settings.social_youtube_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}">
+              <span class="icon icon-youtube" aria-hidden="true"></span>
+              <span class="visually-hidden">YouTube</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_vimeo_link != blank %}
+          <li>
+            <a href="{{ settings.social_vimeo_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}">
+              <span class="icon icon-vimeo" aria-hidden="true"></span>
+              <span class="visually-hidden">Vimeo</span>
+            </a>
+          </li>
+        {% endif %}
+        {% if settings.social_fancy_link != blank %}
+          <li>
+            <a href="{{ settings.social_fancy_link | escape }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Fancy' }}">
+              <span class="icon icon-fancy" aria-hidden="true"></span>
+              <span class="visually-hidden">Fancy</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="grid__item large-up--one-half">
+      <span class="site-footer__copyright">&copy; {{ 'now' | date: '%Y' }}, <a href="{{ routes.root_url }}">{{ shop.name }}</a>. {{ powered_by_link }}</span>
+    </div>
+    <div class="grid__item large-up--one-quarter text-center">
+      {%- if section.settings.show_payment_icons -%}
+        {%- unless shop.enabled_payment_types == empty -%}
+          <span class="visually-hidden">{{ 'general.payment.method' | t }}</span>
+          <ul class="list--inline payment-icons payment-icons--footer">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>
+                {{ type | payment_type_svg_tag: class: 'payment-icons__icon' }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endunless -%}
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Zápatí",
+    "da": "Sidefod",
+    "de": "Fußzeile",
+    "en": "Footer",
+    "es": "Pie de página",
+    "fi": "Alatunniste",
+    "fr": "Pied de page",
+    "it": "Footer",
+    "ja": "フッター",
+    "ko": "바닥글",
+    "nb": "Footer",
+    "nl": "Voettekst",
+    "pl": "Stopka",
+    "pt-BR": "Rodapé",
+    "pt-PT": "Rodapé",
+    "sv": "Sidfot",
+    "th": "ส่วนท้าย",
+    "tr": "Altbilgi",
+    "vi": "Chân trang",
+    "zh-CN": "页脚",
+    "zh-TW": "頁尾"
+  },
+  "class": "footer-section",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "footer_link_list",
+      "label": {
+        "cs": "Nabídka",
+        "da": "Menu",
+        "de": "Menü",
+        "en": "Menu",
+        "es": "Menú",
+        "fi": "Valikko",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "ko": "메뉴",
+        "nb": "Meny",
+        "nl": "Menu",
+        "pl": "Menu",
+        "pt-BR": "Menu",
+        "pt-PT": "Menu",
+        "sv": "Meny",
+        "th": "เมนู",
+        "tr": "Menü",
+        "vi": "Menu",
+        "zh-CN": "菜单",
+        "zh-TW": "選單"
+      },
+      "default": "footer",
+      "info": {
+        "cs": "V této nabídce se nezobrazí položky rozevíracího seznamu",
+        "da": "Denne menu viser ikke rullemenupunkter",
+        "de": "Dieses Menü zeigt keine Dropdowns an",
+        "en": "This menu won't show dropdown items",
+        "es": "Este menú no mostrará elementos desplegables",
+        "fi": "Tämä valikko ei näytä pudotuskohteita",
+        "fr": "Ce menu n'affichera pas les éléments des menus déroulants",
+        "it": "Questo menu non mostrerà elementi a discesa",
+        "ja": "このメニューにはドロップダウンアイテムは表示されません",
+        "ko": "이 메뉴는 드롭 다운 항목을 표시하지 않습니다.",
+        "nb": "Denne menyen vil ikke vise rullegardinelementer",
+        "nl": "Dit menu laat geen vervolgkeuze-artikelen zien.",
+        "pl": "W tym menu pozycje rozwijane nie będą wyświetlane",
+        "pt-BR": "Este menu não mostra itens suspensos",
+        "pt-PT": "Este menu não irá mostrar itens pendentes",
+        "sv": "Den här menyn kommer inte att visa objekt i rullgardinsmenyn",
+        "th": "เมนูนี้จะไม่แสดงรายการดรอปดาวน์",
+        "tr": "Bu menü açılır öğeleri göstermez",
+        "vi": "Menu này sẽ không hiển thị các mục thả xuống",
+        "zh-CN": "此菜单不会显示下拉项",
+        "zh-TW": "這個選單不會顯示下拉式項目"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": {
+        "cs": "Zobrazit ikony plateb",
+        "da": "Vis betalingsikoner",
+        "de": "Zahlungssymbole anzeigen",
+        "en": "Show payment icons",
+        "es": "Mostrar iconos de pago",
+        "fi": "Näytä maksukuvakkeet",
+        "fr": "Afficher les icônes de paiement",
+        "it": "Mostra le icone di pagamento",
+        "ja": "支払いアイコンを表示する",
+        "ko": "결제 아이콘 표시",
+        "nb": "Vis betalingsikoner",
+        "nl": "Betalingspictogrammen weergeven",
+        "pl": "Pokaż ikony płatności",
+        "pt-BR": "Exibir ícones de pagamento",
+        "pt-PT": "Mostrar ícones de pagamento",
+        "sv": "Visa betalningsikoner",
+        "th": "แสดงไอคอนการชำระเงิน",
+        "tr": "Ödeme simgelerini göster",
+        "vi": "Hiển thị biểu tượng thanh toán",
+        "zh-CN": "显示付款图标",
+        "zh-TW": "顯示付款圖示"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}

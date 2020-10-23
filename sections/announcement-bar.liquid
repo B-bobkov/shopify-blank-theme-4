@@ -1,0 +1,261 @@
+{% if section.settings.show_announcement %}
+  {% if section.settings.home_page_only == false or request.page_type == 'index' %}
+    <style>
+      .announcement-bar {
+        background-color: {{ section.settings.color_bg }};
+      }
+
+      .announcement-bar--link:hover {
+        {% assign brightness = section.settings.color_bg | color_brightness %}
+
+        {% if brightness <= 192 %}
+          {% assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 %}
+          background-color: {{ section.settings.color_bg | color_lighten: lightenAmount }};
+        {% else %}
+          {% assign darkenAmount = 255 | divided_by: brightness | times: 8 %}
+          background-color: {{ section.settings.color_bg | color_darken: darkenAmount }};
+        {% endif %}
+      }
+
+      .announcement-bar__message {
+        color: {{ section.settings.color_text }};
+      }
+    </style>
+
+    {% if section.settings.link == blank %}
+      <div class="announcement-bar">
+    {% else %}
+      <a href="{{ section.settings.link }}" class="announcement-bar announcement-bar--link">
+    {% endif %}
+
+      <p class="announcement-bar__message">{{ section.settings.text | escape }}</p>
+
+    {% if section.settings.link == blank %}
+      </div>
+    {% else %}
+      </a>
+    {% endif %}
+
+  {% endif %}
+{% endif %}
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Panel oznámení",
+    "da": "Meddelelseslinje",
+    "de": "Ankündigungsleiste",
+    "en": "Announcement bar",
+    "es": "Barra de anuncios",
+    "fi": "Ilmoituspalkki",
+    "fr": "Barre d'annonces",
+    "it": "Barra degli annunci",
+    "ja": "告知バー",
+    "ko": "공지 표시줄",
+    "nb": "Kunngjøringslinje",
+    "nl": "Aankondigingsbalk",
+    "pl": "Pasek ogłoszeń",
+    "pt-BR": "Barra de avisos",
+    "pt-PT": "Barra de comunicado",
+    "sv": "Meddelandefält",
+    "th": "แถบประกาศ",
+    "tr": "Duyuru çubuğu",
+    "vi": "Thanh thông báo",
+    "zh-CN": "公告栏",
+    "zh-TW": "公告列"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": {
+        "cs": "Zobrazit oznámení",
+        "da": "Vis meddelelse",
+        "de": "Ankündigung anzeigen",
+        "en": "Show announcement",
+        "es": "Mostrar anuncio",
+        "fi": "Näytä ilmoitus",
+        "fr": "Afficher l'annonce",
+        "it": "Mostra annuncio",
+        "ja": "告知を表示する",
+        "ko": "공지 표시",
+        "nb": "Vis kunngjøring",
+        "nl": "Aankondiging weergeven",
+        "pl": "Pokaż ogłoszenie",
+        "pt-BR": "Exibir comunicado",
+        "pt-PT": "Mostrar comunicado",
+        "sv": "Visa tillkännagivande",
+        "th": "แสดงประกาศ",
+        "tr": "Duyuruyu göster",
+        "vi": "Hiển thị thông báo",
+        "zh-CN": "显示公告",
+        "zh-TW": "顯示公告"
+      },
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "home_page_only",
+      "label": {
+        "cs": "Jen domovská stránka",
+        "da": "Kun startside",
+        "de": "Nur Startseite",
+        "en": "Home page only",
+        "es": "Solo página de inicio",
+        "fi": "Vain etusivu",
+        "fr": "Page d'accueil uniquement",
+        "it": "Solo home page",
+        "ja": "ホームページのみ",
+        "ko": "홈페이지만",
+        "nb": "Kun på startsiden",
+        "nl": "Alleen homepage",
+        "pl": "Tylko strona główna",
+        "pt-BR": "Apenas na página inicial",
+        "pt-PT": "Apenas a página inicial",
+        "sv": "Endast hemsida",
+        "th": "หน้าแรกเท่านั้น",
+        "tr": "Yalnızca ana sayfa",
+        "vi": "Chỉ trang chủ",
+        "zh-CN": "仅主页",
+        "zh-TW": "僅限首頁"
+      },
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": {
+        "cs": "Text oznámení",
+        "da": "Meddelelsestekst",
+        "de": "Ankündigungstext",
+        "en": "Announcement text",
+        "es": "Texto del anuncio",
+        "fi": "Ilmoitusteksti",
+        "fr": "Texte d'annonce",
+        "it": "Testo annuncio",
+        "ja": "告知テキスト",
+        "ko": "공지 텍스트",
+        "nb": "Kunngjøringstekst",
+        "nl": "Aankondigingstekst",
+        "pl": "Tekst ogłoszenia",
+        "pt-BR": "Texto do comunicado",
+        "pt-PT": "Texto do comunicado",
+        "sv": "Meddelandetext",
+        "th": "ข้อความประกาศ",
+        "tr": "Duyuru metni",
+        "vi": "Văn bản thông báo",
+        "zh-CN": "公告文本",
+        "zh-TW": "公告文字"
+      },
+      "default": {
+        "cs": "Tady můžete zadat oznámení",
+        "da": "Meddel noget her",
+        "de": "Hier etwas ankündigen",
+        "en": "Announce something here",
+        "es": "Anuncia algo aquí",
+        "fi": "Ilmoita jotakin tässä",
+        "fr": "Annoncez quelque chose ici",
+        "it": "Annuncia qualcosa qui",
+        "ja": "ここで告知してください",
+        "ko": "여기에 공지하십시오",
+        "nb": "Kunngjør noe her",
+        "nl": "Kondig hier iets aan",
+        "pl": "Ogłoś coś tutaj",
+        "pt-BR": "Anuncie algo aqui",
+        "pt-PT": "Anunciar algo aqui",
+        "sv": "Meddela något här",
+        "th": "ประกาศข้อความที่นี่",
+        "tr": "Buraya bir duyuru ekleyin",
+        "vi": "Thông báo điều gì đó tại đây",
+        "zh-CN": "在此处进行公告",
+        "zh-TW": "在此公告資訊"
+      }
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": {
+        "cs": "Odkaz oznámení",
+        "da": "Link til meddelelse",
+        "de": "Ankündigungslink",
+        "en": "Announcement link",
+        "es": "Enlace de anuncio",
+        "fi": "Ilmoituslinkki",
+        "fr": "Lien d'annonce",
+        "it": "Link annuncio",
+        "ja": "告知リンク",
+        "ko": "공지 링크",
+        "nb": "Kunngjøringskobling",
+        "nl": "Aankondigingslink",
+        "pl": "Link ogłoszenia",
+        "pt-BR": "Link de comunicado",
+        "pt-PT": "Ligação do comunicado",
+        "sv": "Meddelandelänk",
+        "th": "ลิงก์ประกาศ",
+        "tr": "Duyuru bağlantısı",
+        "vi": "Liên kết thông báo",
+        "zh-CN": "公告链接",
+        "zh-TW": "公告連結"
+      }
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": {
+        "cs": "Barva panelu",
+        "da": "Søjlefarve",
+        "de": "Balkenfarbe",
+        "en": "Bar color",
+        "es": "Color de la barra",
+        "fi": "Palkin väri",
+        "fr": "Couleur de la barre",
+        "it": "Colore della barra",
+        "ja": "バーの色",
+        "ko": "바 색상",
+        "nb": "Farge på linje",
+        "nl": "Kleur balk",
+        "pl": "Kolor paska",
+        "pt-BR": "Cor da barra",
+        "pt-PT": "Cor da barra",
+        "sv": "Fältfärg",
+        "th": "สีแถบ",
+        "tr": "Çubuk rengi",
+        "vi": "Màu thanh",
+        "zh-CN": "栏的颜色",
+        "zh-TW": "列顏色"
+      },
+      "default": "#dbc18b"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": {
+        "cs": "Barva textu",
+        "da": "Tekstfarve",
+        "de": "Textfarbe",
+        "en": "Text color",
+        "es": "Color de la fuente",
+        "fi": "Tekstin väri",
+        "fr": "Couleur du texte",
+        "it": "Colore del testo",
+        "ja": "テキストの配色",
+        "ko": "텍스트 색상",
+        "nb": "Tekstfarge",
+        "nl": "Tekstkleur",
+        "pl": "Kolor tekstu",
+        "pt-BR": "Cor do texto",
+        "pt-PT": "Cor do texto",
+        "sv": "Textfärg",
+        "th": "สีข้อความ",
+        "tr": "Metin rengi",
+        "vi": "Màu chữ",
+        "zh-CN": "文本颜色",
+        "zh-TW": "文字顏色"
+      },
+      "default": "#fff"
+    }
+  ]
+}
+{% endschema %}

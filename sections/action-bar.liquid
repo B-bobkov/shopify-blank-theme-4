@@ -1,0 +1,174 @@
+<!-- snippets/action-bar.liquid -->
+{% comment %}
+  Action Bar
+    - Only appears on pages which contain a link that is in the action bar
+    - Exceptions: always on for collections. Always off for product.
+
+    To remove the action bar, remove or comment out `{% include 'action-bar' %}
+    anythwere it appears.
+{% endcomment %}
+
+{% assign action_bar_main_active = true %}
+{% for link in linklists[section.settings.action_bar_link_list].links %}
+  {% if link.active or request.page_type == 'index' or request.page_type == 'collection' %}
+    {% assign child_list_handle = link.title | handleize %}
+    {% if link.links == blank and link.active %}
+      {% assign action_bar_active_url = link.url %}
+    {% endif %}
+
+    {% if link.links != blank %}
+      {% for childlink in link.links %}
+        {% if childlink.active or link.active %}
+          {% assign active_child_link = true %}
+          {% assign active_child_link_handle = child_list_handle %}
+
+          {% comment %}
+            make sure we're handling duplicate links in the action bar and
+            sub action bar menus.
+          {% endcomment %}
+          {% if childlink.active.url == action_bar_active_url %}
+            {% assign action_bar_main_active = false %}
+          {% else %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+
+  {% comment %}
+    If on index, it should be at the bottom of the hero area
+  {% endcomment %}
+  <div class="action-bar-wrapper {% if request.page_type == 'index' %} action-bar--hero{% endif %} {% if section.settings.action_bar_link_list == blank %} hide {% endif %}" data-section-id="{{ section.id }}" data-section-type="action-bar-section">
+
+
+    <nav class="action-bar action-bar--has-menu" role="presentation">
+      <ul class="action-bar__menu--main action-bar__menu list--inline {% if action_bar_main_active %} action-bar--show{% endif %}" id="SiteNav" role="navigation">
+        {% comment %}
+          Assign which child linklist is associated with the action bar
+          link
+        {% endcomment %}
+        {% for link in linklists[section.settings.action_bar_link_list].links %}
+          {% assign child_list_handle = link.title | handleize %}
+          {% if link.links != blank %}
+            {% if child_list_handle == active_child_link_handle %}
+              {% assign active_children = true %}
+            {% else %}
+              {% assign active_children = false %}
+            {% endif %}
+            <li class="action-bar__menu-item action-bar--has-dropdown{% if link.active or active_children %} action-bar--active{% endif %}{% if active_children %} action-bar--disabled{% endif %}" data-child-list-handle="{{ child_list_handle }}" >
+              <a href="{{ link.url }}" class="action-bar__link" aria-controls="{{ child_list_handle | capitalize }}">{{ link.title }}</a>
+            </li>
+          {% else %}
+            <li class="action-bar__menu-item {% if link.active %}action-bar--active{% endif %}">
+              <a href="{{ link.url }}" class="action-bar__link">{{ link.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+
+      {% for link in linklists[section.settings.action_bar_link_list].links %}
+        {% assign child_list_handle = link.title | handleize %}
+        {% if link.links != blank %}
+          <ul class="action-bar__menu--sub action-bar__menu list--inline  {% if child_list_handle == active_child_link_handle %} action-bar--show{% endif %}" id="{{ child_list_handle | capitalize }}" data-child-list-handle="{{ child_list_handle }}" role="navigation">
+            <li>
+              <button type="button" class="btn action-bar__back action-bar__link" aria-controls="SiteNav">
+                <span class="icon icon-arrow-left" aria-hidden="true"></span>
+                <span class="icon__fallback-text">{{ 'layout.navigation.action_bar_back' | t }}</span>
+              </button>
+            </li>
+            {% for childlink in link.links %}
+              <li class="action-bar__menu-item {% if childlink.active %}action-bar--active{% endif %}">
+                <a href="{{ childlink.url }}" class="action-bar__link">{{ childlink.title | escape }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Lišta akcí",
+    "da": "Handlingslinje",
+    "de": "Aktionsleiste",
+    "en": "Action bar",
+    "es": "Barra de acciones",
+    "fi": "Toimintopalkki",
+    "fr": "Barre de menus",
+    "it": "Barra delle azioni",
+    "ja": "アクションバー",
+    "ko": "작업 모음",
+    "nb": "Handlingsfelt",
+    "nl": "Actiebalk",
+    "pl": "Pasek czynności",
+    "pt-BR": "Barra de ações",
+    "pt-PT": "Barra de ação",
+    "sv": "Åtgärdsfält",
+    "th": "แถบการดำเนินการ",
+    "tr": "İşlem çubuğu",
+    "vi": "Thanh thao tác",
+    "zh-CN": "操作栏",
+    "zh-TW": "動作列"
+  },
+  "class": "action-bar-section",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "action_bar_link_list",
+      "label": {
+        "cs": "Nabídka",
+        "da": "Menu",
+        "de": "Menü",
+        "en": "Menu",
+        "es": "Menú",
+        "fi": "Valikko",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "ko": "메뉴",
+        "nb": "Meny",
+        "nl": "Menu",
+        "pl": "Menu",
+        "pt-BR": "Menu",
+        "pt-PT": "Menu",
+        "sv": "Meny",
+        "th": "เมนู",
+        "tr": "Menü",
+        "vi": "Menu",
+        "zh-CN": "菜单",
+        "zh-TW": "選單"
+      },
+      "default": "main-menu",
+      "info": {
+        "cs": "Tato nabídka poskytuje omezenou podporu pro položky rozevíracího seznamu",
+        "da": "Denne menu har begrænset understøttelse af rullemenupunkter",
+        "de": "Dieses Menü bietet eingeschränkte Unterstützung für Dropdown-Elemente",
+        "en": "This menu has limited support for dropdown items",
+        "es": "Este menú admite pocos elementos desplegables",
+        "fi": "Tässä valikossa on rajoitettu tuki pudotuskohteille",
+        "fr": "Ce menu a un support limité pour les éléments de liste déroulante",
+        "it": "Questo menu supporta gli elementi a discesa in modo limitato",
+        "ja": "このメニューではドロップダウンアイテムのサポートが制限されています。",
+        "ko": "이 메뉴는 드롭 다운 항목에 대한 지원이 제한되어 있습니다.",
+        "nb": "Denne menyen har begrenset støtte for rullegardinelementer",
+        "nl": "Dit menu heeft beperkte ondersteuning voor vervolgkeuzelijsten",
+        "pl": "W tym menu obsługa pozycji rozwijanych jest ograniczona",
+        "pt-BR": "Este menu tem suporte limitado para itens suspensos",
+        "pt-PT": "Este menu tem suporte limitado para itens pendentes",
+        "sv": "Den här menyn har begränsat stöd för listmenyobjekt",
+        "th": "เมนูนี้มีความช่วยเหลือที่จำกัดสำหรับรายการดรอปดาวน์",
+        "tr": "Bu menünün açılır öğe desteği sınırlıdır",
+        "vi": "Menu này hỗ trợ hạn chế các mục thả xuống",
+        "zh-CN": "本菜单支持的下拉项有限",
+        "zh-TW": "此選單對下拉式項目的支援有限"
+      }
+    }
+  ]
+}
+{% endschema %}
